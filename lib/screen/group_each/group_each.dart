@@ -5,17 +5,39 @@ import 'package:dowith/screen/videocall/videocall.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class GroupDetailPage extends StatelessWidget {
+class GroupDetailPage extends StatefulWidget {
   final String title;
+
+  GroupDetailPage({required this.title});
+
+  @override
+  State<GroupDetailPage> createState() => _GroupDetailPageState();
+}
+
+class _GroupDetailPageState extends State<GroupDetailPage> {
   final Map<String, int> membersProgress = {
     'Jimin': 100,
     'Sun': 66,
     'Eun': 33,
   };
   final groupIntro = 'Studying Algorithms From Baekjoon';
-  GroupDetailPage({required this.title});
+
+  bool isShareModalOpen = false;
+
+  void _openShareModal() {
+    setState(() {
+      isShareModalOpen = true;
+    });
+  }
+
+  void _closeShareModal() {
+    setState(() {
+      isShareModalOpen = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +66,18 @@ class GroupDetailPage extends StatelessWidget {
             ),
             child: Column(
               children: <Widget>[
-                Expanded(child: _basePage(title: title, groupIntro: groupIntro,),), // title + txt btns + group intro
+                Expanded(
+                    child: _basePage(
+                      title: widget.title,
+                      groupIntro: groupIntro,
+                      openShareModal: _openShareModal,
+                  ),
+                ), // title + txt btns + group intro
                 _memberList(membersProgress: membersProgress,), // member list
               ],
             ),
           ),
-          _share_modal(),
+          if (isShareModalOpen) _share_modal(closeShareModal: _closeShareModal),
         ],
       ),
     );
@@ -59,10 +87,13 @@ class GroupDetailPage extends StatelessWidget {
 class _basePage extends StatelessWidget {
   final String title;
   final String groupIntro;
-  const _basePage({
+  final VoidCallback openShareModal;
+
+  _basePage({
     super.key,
     required this.title,
     required this.groupIntro,
+    required this.openShareModal,
   });
 
   @override
@@ -79,7 +110,7 @@ class _basePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _basePage_Title(title: title,), // title
-                _basePage_TxtBtns(title: title,), // txt btns
+                _basePage_TxtBtns(title: title, openShareModal: openShareModal,), // txt btns
               ],
             ),
           ),
@@ -169,9 +200,12 @@ class _basePage_Title extends StatelessWidget {
 
 class _basePage_TxtBtns extends StatelessWidget {
   final String title;
+  final VoidCallback openShareModal;
+
   const _basePage_TxtBtns({
     super.key,
     required this.title,
+    required this.openShareModal,
   });
 
   @override
@@ -215,9 +249,7 @@ class _basePage_TxtBtns extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(bottom: 4),
               child: GestureDetector(
-                onTap: (){
-
-                },
+                onTap: openShareModal,
                 child: Text(
                     "share",
                     style: TextStyle(
@@ -343,13 +375,24 @@ class _memberList_Progress extends StatelessWidget {
   }
 }
 
-class _share_modal extends StatelessWidget {
-  final String groupShareCode = 'D57SK81';
+class _share_modal extends StatefulWidget {
+  final VoidCallback closeShareModal;
 
-  const _share_modal({super.key});
+  const _share_modal({super.key, required this.closeShareModal});
+
+  @override
+  State<_share_modal> createState() => _share_modalState();
+}
+
+class _share_modalState extends State<_share_modal> {
+  final String groupShareCode = 'D57SK81';
+  bool isShareCodeCopied = false;
 
   void copy(){
-    Clipboard.setData(ClipboardData(text: groupShareCode));
+    setState(() {
+      Clipboard.setData(ClipboardData(text: groupShareCode));
+      isShareCodeCopied = true;
+    });
   }
 
   @override
@@ -385,17 +428,21 @@ class _share_modal extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Image.asset(
-                      'assets/img/close_btn.png',
-                      height: 17,
+                    GestureDetector(
+                      onTap: widget.closeShareModal,
+                      child: Image.asset(
+                        'assets/img/close_btn.png',
+                        height: 17,
+                      ),
                     ),
                   ],
                 )
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+                padding: EdgeInsets.symmetric(horizontal: 15),
                 child: Column(
                   children: [
+                    SizedBox(height: 30,),
                     SvgPicture.asset('assets/img/Orange_Circle.svg'),
                     SizedBox(height: 30,),
                     Text(
@@ -444,6 +491,21 @@ class _share_modal extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Container(
+                      alignment: Alignment.topLeft,
+                      padding: const EdgeInsets.only(top:8.0, left: 15),
+                      child: Text(
+                        'Code Copied!',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'Arimo-Medium',
+                          color: isShareCodeCopied ? Color(0xFFFD531E) : Colors.transparent,
+                          height: 1,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(height: 20,),
                   ],
                 ),
               )
