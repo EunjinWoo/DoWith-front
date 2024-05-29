@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:dowith/screen/member_each/member_each.dart';
+import 'package:dowith/screen/group_each_info/group_each_info.dart';
 import 'package:dowith/screen/videocall/videocall.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -223,7 +223,7 @@ class _basePage_TxtBtns extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => eachMemberPage(title: title,)),
+                    MaterialPageRoute(builder: (context) => eachGroupinfoPage(title: title,)),
                   );
                 },
                 child: Text(

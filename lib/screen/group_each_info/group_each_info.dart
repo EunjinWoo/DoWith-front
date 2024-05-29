@@ -3,38 +3,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class eachMemberPage extends StatelessWidget {
+class eachGroupinfoPage extends StatelessWidget {
   final String title;
-  eachMemberPage({super.key, required this.title,});
+  eachGroupinfoPage({super.key, required this.title,});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey,
         toolbarHeight: -10,
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Expanded(
-              child: _eachMemberPage_body(),
-            ),
-            _eachMemberPage_Title(title: title,),
-          ],
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: _eachGroupinfoPage_body(),
+          ),
+          _eachGroupinfoPage_Title(title: title,),
+          SizedBox(height: 10,),
+        ],
       ),
     );
   }
 }
 
-class _eachMemberPage_Title extends StatelessWidget {
+class _eachGroupinfoPage_Title extends StatelessWidget {
   final String title;
-  const _eachMemberPage_Title({super.key, required this.title});
+  const _eachGroupinfoPage_Title({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      // color: Colors.grey,
       constraints: BoxConstraints(
         maxHeight: 130,
       ),
@@ -47,6 +46,7 @@ class _eachMemberPage_Title extends StatelessWidget {
             fontFamily: 'Arimo-Bold',
             color: Colors.black,
             fontSize: 250,
+            height: 1,
           ),
         ),
       ),
@@ -54,26 +54,26 @@ class _eachMemberPage_Title extends StatelessWidget {
   }
 }
 
-class _eachMemberPage_body extends StatelessWidget {
+class _eachGroupinfoPage_body extends StatelessWidget {
 
-  const _eachMemberPage_body({super.key});
+  const _eachGroupinfoPage_body({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: [
-          _eachMemberPage_body_top(),
-          Flexible(flex: 7 ,child: _eachMemberPage_body_mid()),
-          _eachMemberPage_body_bottom_info(),
+          _eachGroupinfoPage_body_top(),
+          Flexible(flex: 7 ,child: _eachGroupinfoPage_body_mid()),
+          _eachGroupinfoPage_body_bottom_info(),
         ],
       ),
     );
   }
 }
 
-class _eachMemberPage_body_top extends StatelessWidget {
-  const _eachMemberPage_body_top({super.key});
+class _eachGroupinfoPage_body_top extends StatelessWidget {
+  const _eachGroupinfoPage_body_top({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -84,8 +84,8 @@ class _eachMemberPage_body_top extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 20),
         child: Row(
           children: [
-            _eachMemberPage_body_top_intro(),
-            _eachMemberPage_body_top_members()
+            _eachGroupinfoPage_body_top_intro(),
+            _eachGroupinfoPage_body_top_members()
           ],
         ),
       ),
@@ -93,9 +93,9 @@ class _eachMemberPage_body_top extends StatelessWidget {
   }
 }
 
-class _eachMemberPage_body_top_intro extends StatelessWidget {
+class _eachGroupinfoPage_body_top_intro extends StatelessWidget {
   final String intro = 'Studying Algorithms From Baekjoon';
-  const _eachMemberPage_body_top_intro({super.key});
+  const _eachGroupinfoPage_body_top_intro({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +136,7 @@ class _eachMemberPage_body_top_intro extends StatelessWidget {
   }
 }
 
-class _eachMemberPage_body_top_members extends StatelessWidget {
+class _eachGroupinfoPage_body_top_members extends StatelessWidget {
   final Map<String, int> members = {
     'Jimin' : 0,
     'Sun' : 0,
@@ -144,7 +144,7 @@ class _eachMemberPage_body_top_members extends StatelessWidget {
     // 'Boo' : 0,
     // 'Han' : 1,
   };
-  _eachMemberPage_body_top_members({super.key});
+  _eachGroupinfoPage_body_top_members({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -235,8 +235,8 @@ class _eachMemberPage_body_top_members extends StatelessWidget {
   }
 }
 
-class _eachMemberPage_body_mid extends StatelessWidget {
-  const _eachMemberPage_body_mid({super.key});
+class _eachGroupinfoPage_body_mid extends StatelessWidget {
+  const _eachGroupinfoPage_body_mid({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -249,9 +249,9 @@ class _eachMemberPage_body_mid extends StatelessWidget {
   }
 }
 
-class _eachMemberPage_body_bottom_info extends StatelessWidget {
+class _eachGroupinfoPage_body_bottom_info extends StatelessWidget {
   final String info = 'Good luck with your job. 🥹  Upload a plan every week A fine of 30,000 won if less than 80% is not met A fine of 10,000 won for not uploading the plan  🧾 Account: Hana Bank 000-000-0000000 Woo Eunjin';
-  const _eachMemberPage_body_bottom_info({super.key});
+  const _eachGroupinfoPage_body_bottom_info({super.key});
 
   @override
   Widget build(BuildContext context) {
