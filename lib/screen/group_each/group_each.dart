@@ -1,4 +1,5 @@
 import 'package:dowith/screen/member_each/member_each.dart';
+import 'package:dowith/screen/videocall/videocall.dart';
 import 'package:flutter/material.dart';
 
 class GroupDetailPage extends StatelessWidget {
@@ -20,26 +21,31 @@ class GroupDetailPage extends StatelessWidget {
         foregroundColor: Colors.white, // 글자색 흰색
         toolbarHeight: -10,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFFF3D00), // 시작 색상
-              Color(0xFFFF5602),
-              Color(0xFFFD864B),
-              Color(0xFFFCBA99),
-              Color(0xFFF9F9F9)  // 종료 색상
-            ],
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFFFF3D00), // 시작 색상
+                  Color(0xFFFF5602),
+                  Color(0xFFFD864B),
+                  Color(0xFFFCBA99),
+                  Color(0xFFF9F9F9)  // 종료 색상
+                ],
+              ),
+            ),
+            child: Column(
+              children: <Widget>[
+                Expanded(child: _basePage(title: title, groupIntro: groupIntro,),), // title + txt btns + group intro
+                _memberList(membersProgress: membersProgress,), // member list
+              ],
+            ),
           ),
-        ),
-        child: Column(
-          children: <Widget>[
-            Expanded(child: _basePage(title: title, groupIntro: groupIntro,),), // title + txt btns + group intro
-            _memberList(membersProgress: membersProgress,), // member list
-          ],
-        ),
+          _share_modal(),
+        ],
       ),
     );
   }
@@ -56,27 +62,25 @@ class _basePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Container(
-            child: Transform.translate(
-              offset: Offset(0,-15),
-              child: Column( // title + txt btns
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _basePage_Title(title: title,), // title
-                  _basePage_TxtBtns(title: title,), // txt btns
-                ],
-              ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Container(
+          child: Transform.translate(
+            offset: Offset(0,-15),
+            child: Column( // title + txt btns
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _basePage_Title(title: title,), // title
+                _basePage_TxtBtns(title: title,), // txt btns
+              ],
             ),
-          ), // title + txt btns
-          _basePage_GroupIntro(groupIntro: groupIntro,), // group intro
-        ],
-      ),
+          ),
+        ), // title + txt btns
+        _basePage_GroupIntro(groupIntro: groupIntro,), // group intro
+      ],
     );
   }
 }
@@ -95,7 +99,10 @@ class _memberList extends StatelessWidget {
       constraints: BoxConstraints(maxHeight: 300),
       decoration: BoxDecoration(
         color: Colors.white,  // 배경색을 흰색으로 설정
-        borderRadius: BorderRadius.circular(37),  // 모서리를 둥글게 설정
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(37),
+          topRight: Radius.circular(37),
+        ),
         boxShadow: [  // 그림자 추가
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -191,7 +198,14 @@ class _basePage_TxtBtns extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 4),
-              child: Text("video call", style: TextStyle(fontSize: 20, color: Colors.white, fontFamily: 'Arimo-Regular')),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => VideoCall()),
+                    );
+                  },
+                  child: Text("video call", style: TextStyle(fontSize: 20, color: Colors.white, fontFamily: 'Arimo-Regular'))),
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 4),
@@ -307,6 +321,28 @@ class _memberList_Progress extends StatelessWidget {
         fontSize: 20,
         fontFamily: 'Arimo-Bold',
         color: progress == 100 ? Color(0xFFFF5500) : Colors.black,
+      ),
+    );
+  }
+}
+
+class _share_modal extends StatelessWidget {
+  const _share_modal({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double mediaQuery = MediaQuery.of(context).size.width;
+    double mediaQuery_height = MediaQuery.of(context).size.height;
+    print(mediaQuery_height);
+
+    return Center(
+      child: Container(
+        color: Colors.white,
+        width: mediaQuery * 0.9,
+        // height: mediaQuery_height * 0.5,// 최소 높이를 화면 높이로 설정,
+        child: Container(
+
+        ),
       ),
     );
   }

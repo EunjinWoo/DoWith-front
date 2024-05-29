@@ -1,0 +1,3 @@
+const appId = 'a0538e592070441eb27615a81235abc8';
+const channelName = 'DoWith';
+const token = '007eJxTYDDt3OVyYGvOmSirsNlzrXnD2lbKbE58fPXdcunAPSGrzR4rMCQamBpbpJpaGhmYG5iYGKYmGZmbGZomWhgaGZsmJiVbXNgcltYQyMhwm4eRkZEBAkF8NgaX/PDMkgwGBgB7xR9v';
