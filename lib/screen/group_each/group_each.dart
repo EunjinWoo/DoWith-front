@@ -1,6 +1,11 @@
+import 'dart:ui';
+
 import 'package:dowith/screen/member_each/member_each.dart';
 import 'package:dowith/screen/videocall/videocall.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class GroupDetailPage extends StatelessWidget {
   final String title;
@@ -209,7 +214,19 @@ class _basePage_TxtBtns extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 4),
-              child: Text("share", style: TextStyle(fontSize: 20, color: Colors.white, fontFamily: 'Arimo-Regular')),
+              child: GestureDetector(
+                onTap: (){
+
+                },
+                child: Text(
+                    "share",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontFamily: 'Arimo-Regular'
+                    )
+                ),
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 4),
@@ -327,21 +344,111 @@ class _memberList_Progress extends StatelessWidget {
 }
 
 class _share_modal extends StatelessWidget {
+  final String groupShareCode = 'D57SK81';
+
   const _share_modal({super.key});
+
+  void copy(){
+    Clipboard.setData(ClipboardData(text: groupShareCode));
+  }
 
   @override
   Widget build(BuildContext context) {
     double mediaQuery = MediaQuery.of(context).size.width;
-    double mediaQuery_height = MediaQuery.of(context).size.height;
-    print(mediaQuery_height);
 
     return Center(
       child: Container(
-        color: Colors.white,
         width: mediaQuery * 0.9,
-        // height: mediaQuery_height * 0.5,// 최소 높이를 화면 높이로 설정,
-        child: Container(
-
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.8),
+              blurRadius: 10,
+              spreadRadius: 2,
+              offset: const Offset(2,4),
+            )
+          ]
+        ),// 최소 높이를 화면 높이로 설정,
+        child: IntrinsicHeight(
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Color(0xFFEEEEEE),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(10))
+                ),
+                height: 30,
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Image.asset(
+                      'assets/img/close_btn.png',
+                      height: 17,
+                    ),
+                  ],
+                )
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+                child: Column(
+                  children: [
+                    SvgPicture.asset('assets/img/Orange_Circle.svg'),
+                    SizedBox(height: 30,),
+                    Text(
+                      'Share your Group!',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontFamily: 'Arimo-Bold'
+                      ),
+                    ),
+                    SizedBox(height: 5,),
+                    Text(
+                      'Group code issued. Share this group code with other users who want to join the group. The code is valid for up to 1 day.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'Arimo-Medium',
+                        color: Color(0xFF929292),
+                        height: 1.3,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 25,),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(style: BorderStyle.solid, color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            groupShareCode,
+                            style: TextStyle(
+                              fontSize: 35,
+                              fontFamily: 'Arimo-Medium'
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: copy,
+                            child: Image.asset(
+                              'assets/img/copy_icon.png',
+                              height: 35,
+                            )
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
