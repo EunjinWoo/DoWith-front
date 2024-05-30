@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dowith/screen/group_each_add_goals/group_each_add_goals.dart';
 import 'package:dowith/screen/group_each_info/group_each_info.dart';
 import 'package:dowith/screen/videocall/videocall.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +18,7 @@ class GroupDetailPage extends StatefulWidget {
   State<GroupDetailPage> createState() => _GroupDetailPageState();
 }
 
-class _GroupDetailPageState extends State<GroupDetailPage> {
+class _GroupDetailPageState extends State<GroupDetailPage>  {
   final Map<String, int> membersProgress = {
     'Jimin': 100,
     'Sun': 66,
@@ -29,13 +30,17 @@ class _GroupDetailPageState extends State<GroupDetailPage> {
 
   void _openShareModal() {
     setState(() {
-      isShareModalOpen = true;
+      if (!isShareModalOpen) {
+        isShareModalOpen = true;
+      }
     });
   }
 
   void _closeShareModal() {
     setState(() {
-      isShareModalOpen = false;
+      if (isShareModalOpen) {
+        isShareModalOpen = false;
+      }
     });
   }
 
@@ -50,31 +55,34 @@ class _GroupDetailPageState extends State<GroupDetailPage> {
       ),
       body: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFFFF3D00), // 시작 색상
-                  Color(0xFFFF5602),
-                  Color(0xFFFD864B),
-                  Color(0xFFFCBA99),
-                  Color(0xFFF9F9F9)  // 종료 색상
+          GestureDetector(
+            onTap: _closeShareModal,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFFFF3D00), // 시작 색상
+                    Color(0xFFFF5602),
+                    Color(0xFFFD864B),
+                    Color(0xFFFCBA99),
+                    Color(0xFFF9F9F9)  // 종료 색상
+                  ],
+                ),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                      child: _basePage(
+                        title: widget.title,
+                        groupIntro: groupIntro,
+                        openShareModal: _openShareModal,
+                    ),
+                  ), // title + txt btns + group intro
+                  _memberList(membersProgress: membersProgress,), // member list
                 ],
               ),
-            ),
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                    child: _basePage(
-                      title: widget.title,
-                      groupIntro: groupIntro,
-                      openShareModal: _openShareModal,
-                  ),
-                ), // title + txt btns + group intro
-                _memberList(membersProgress: membersProgress,), // member list
-              ],
             ),
           ),
           if (isShareModalOpen) _share_modal(closeShareModal: _closeShareModal),
@@ -266,7 +274,22 @@ class _basePage_TxtBtns extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 0),
-              child: Text("add goals", style: TextStyle(fontSize: 20, color: Colors.white, fontFamily: 'Arimo-Regular')),
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => eachGroupAddGoalsPage()),
+                  );
+                },
+                  child: Text(
+                      "add goals",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontFamily: 'Arimo-Regular'
+                      )
+                  )
+              ),
             ),
           ],
         ),
