@@ -52,7 +52,7 @@ class _GroupDetailPageState extends State<GroupDetailPage>  {
       appBar: AppBar(
         backgroundColor: Colors.black,
         foregroundColor: Colors.white, // 글자색 흰색
-        toolbarHeight: -10,
+        toolbarHeight: -5,
       ),
       body: Stack(
         children: [
