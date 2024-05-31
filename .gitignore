@@ -257,4 +257,7 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
+### agora API key
+lib/const/keys.dart
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,androidstudio,flutter,dart

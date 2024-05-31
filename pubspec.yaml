@@ -67,6 +67,7 @@ flutter:
 
   assets:
     - assets/img/
+    - assets/img/ex_group_each_member/
 
   fonts:
     - family: Arimo-Bold
