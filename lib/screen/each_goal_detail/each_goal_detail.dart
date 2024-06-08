@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 
 class eachGoalDetailPage extends StatelessWidget {
   final String author;
-  final Map goalDetail ;
+  final Map goalDetail;
   /*
   {
   "title" : "73829",
