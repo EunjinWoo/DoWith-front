@@ -1,17 +1,9 @@
-import 'dart:ui';
-
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:dowith/screen/group_each/widgets/basePage.dart';
 import 'package:dowith/screen/group_each/widgets/memberList.dart';
 import 'package:dowith/screen/group_each/widgets/shareModal.dart';
-import 'package:dowith/screen/group_each_add_goals/group_each_add_goals.dart';
-import 'package:dowith/screen/group_each_info/group_each_info.dart';
-import 'package:dowith/screen/group_each_member/group_each_member.dart';
-import 'package:dowith/screen/videocall/videocall.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class GroupDetailPage extends StatefulWidget {
   final String title;
@@ -22,15 +14,38 @@ class GroupDetailPage extends StatefulWidget {
   State<GroupDetailPage> createState() => _GroupDetailPageState();
 }
 
-class _GroupDetailPageState extends State<GroupDetailPage>  {
+class _GroupDetailPageState extends State<GroupDetailPage> {
   final Map<String, int> membersProgress = {
     'Jimin': 100,
     'Sun': 66,
     'Eun': 33,
   };
-  final groupIntro = 'Studying Algorithms From Baekjoon';
 
   bool isShareModalOpen = false;
+  Map<String, dynamic>? groupData;
+  String groupIntro = '';
+  String groupUuid = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchGroupData();
+  }
+
+  Future<void> fetchGroupData() async {
+    final response = await http.get(Uri.parse('http://127.0.0.1:80/group/get/1'));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        groupData = json.decode(response.body);
+        groupIntro = groupData?['group_intro'] ?? groupIntro;
+        groupUuid = groupData?['group_uuid'] ?? groupUuid;
+      });
+      print(groupData);
+    } else {
+      throw Exception('Failed to load group data');
+    }
+  }
 
   void _openShareModal() {
     setState(() {
@@ -51,10 +66,9 @@ class _GroupDetailPageState extends State<GroupDetailPage>  {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color(0xFFFF5500),
       appBar: AppBar(
         backgroundColor: Colors.black,
-        foregroundColor: Colors.white, // 글자색 흰색
+        foregroundColor: Colors.white,
         toolbarHeight: -5,
       ),
       body: Stack(
@@ -67,34 +81,35 @@ class _GroupDetailPageState extends State<GroupDetailPage>  {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xFFFF3D00), // 시작 색상
+                    Color(0xFFFF3D00),
                     Color(0xFFFF5602),
                     Color(0xFFFD864B),
                     Color(0xFFFCBA99),
-                    Color(0xFFF9F9F9)  // 종료 색상
+                    Color(0xFFF9F9F9)
                   ],
                 ),
               ),
               child: Column(
                 children: <Widget>[
                   Expanded(
-                      child: basePage(
-                        title: widget.title,
-                        groupIntro: groupIntro,
-                        openShareModal: _openShareModal,
+                    child: basePage(
+                      title: widget.title,
+                      groupIntro: groupIntro,
+                      openShareModal: _openShareModal,
                     ),
-                  ), // title + txt btns + group intro
-                  memberList(membersProgress: membersProgress,), // member list
+                  ),
+                  memberList(membersProgress: membersProgress),
                 ],
               ),
             ),
           ),
-          if (isShareModalOpen) share_modal(closeShareModal: _closeShareModal),
+          if (isShareModalOpen)
+            share_modal(
+              closeShareModal: _closeShareModal,
+              groupShareCode: groupUuid,
+            ),
         ],
       ),
     );
   }
 }
-
-
-

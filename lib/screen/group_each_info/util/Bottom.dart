@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class eachGroupinfoPage_body_bottom_info extends StatelessWidget {
-  final String info = 'Good luck with your job. 🥹\n\nUpload a plan every week\nA fine of 30,000 won if less than 80% is not met\nA fine of 10,000 won for not uploading the plan\n\n🧾 Account: Hana Bank 000-000-0000000 Woo Eunjin';
-  const eachGroupinfoPage_body_bottom_info({super.key});
+  final String info;
+  const eachGroupinfoPage_body_bottom_info({super.key, required this.info});
 
   @override
   Widget build(BuildContext context) {

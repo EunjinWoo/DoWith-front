@@ -3,7 +3,9 @@ import 'package:dowith/screen/group_each_info/util/Top_members.dart';
 import 'package:flutter/material.dart';
 
 class eachGroupinfoPage_body_top extends StatelessWidget {
-  const eachGroupinfoPage_body_top({super.key});
+  final String intro;
+
+  const eachGroupinfoPage_body_top({super.key, required this.intro});
 
   @override
   Widget build(BuildContext context) {
