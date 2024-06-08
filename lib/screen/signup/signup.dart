@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dowith/screen/login/login.dart';
+import 'package:dowith/screen/login/widgets/Logo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'signup_form.dart';
@@ -107,16 +108,6 @@ class _SignupPageState extends State<SignupPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class Logo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 120, right: 120, bottom: 70, top: 30),
-      child: Image.asset('assets/img/logo_fullword.png'),
     );
   }
 }

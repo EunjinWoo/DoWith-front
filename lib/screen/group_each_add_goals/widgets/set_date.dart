@@ -162,8 +162,8 @@ class SetDateState extends State<SetDate> {
         onTap: () => _selectWeek(context),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            border: Border.all(style: BorderStyle.solid)
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              border: Border.all(style: BorderStyle.solid)
           ),
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: IntrinsicWidth(
@@ -177,8 +177,8 @@ class SetDateState extends State<SetDate> {
                       : 'No week selected',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 15,
-                    fontFamily: 'Pretendard-Regular'
+                      fontSize: 15,
+                      fontFamily: 'Pretendard-Regular'
                   ),
                 )
               ],
