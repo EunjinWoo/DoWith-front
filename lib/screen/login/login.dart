@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'package:dowith/screen/home/home.dart';
+import 'package:dowith/screen/login/widgets/Logo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'login_form.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -12,12 +15,37 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _login() {
-    print('Username: ${_idController.text}');
-    print('Password: ${_passwordController.text}');
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return mainpage();
-    }));
+  void _login() async {
+    final String account = _idController.text;
+    final String password = _passwordController.text;
+
+    final Map<String, dynamic> data = {
+      'account': account,
+      'password': password,
+    };
+
+    final String jsonString = json.encode(data);
+
+    final http.Response response = await http.post(
+      Uri.parse('http://127.0.0.1:80/login'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonString,
+    );
+
+    print('Username: ${account}');
+    print('Password: ${password}');
+
+    if (response.statusCode == 200) {
+      print('Login successful: ${response.body}');
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return mainpage();
+      }));
+    } else {
+      print('Failed to login: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
   }
 
   @override
@@ -58,16 +86,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class Logo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 120, right: 120, bottom: 70, top: 85),
-      child: Image.asset('assets/img/logo_fullword.png'),
     );
   }
 }
