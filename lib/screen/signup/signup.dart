@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dowith/screen/login/login.dart';
-import 'package:dowith/screen/login/widgets/Logo.dart';
+import 'package:dowith/screen/signup/widgets/Logo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'signup_form.dart';
@@ -85,6 +85,7 @@ class _SignupPageState extends State<SignupPage> {
     return Scaffold(
       appBar: AppBar(),
       body: Container(
+        // color: Colors.blue,
         padding: EdgeInsets.all(16.0),
         child: Theme(
           data: Theme.of(context).copyWith(

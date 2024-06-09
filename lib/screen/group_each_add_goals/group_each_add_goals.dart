@@ -4,9 +4,26 @@ import 'package:dowith/screen/group_each_add_goals/widgets/set_date.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
-class eachGroupAddGoalsPage extends StatelessWidget {
+class eachGroupAddGoalsPage extends StatefulWidget {
   const eachGroupAddGoalsPage({super.key});
+
+  @override
+  State<eachGroupAddGoalsPage> createState() => _eachGroupAddGoalsPageState();
+}
+
+class _eachGroupAddGoalsPageState extends State<eachGroupAddGoalsPage> {
+  DateTimeRange? selectedWeek;
+
+  void set_selectedWeek(DateTimeRange? range) {
+    setState(() {
+      selectedWeek = range;
+      // print('week : $selectedWeek');
+      // print('start : ${DateFormat('yyMMdd').format(selectedWeek!.start)}');
+      // print('end : ${DateFormat('yyMMdd').format(selectedWeek!.end)}');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +43,9 @@ class eachGroupAddGoalsPage extends StatelessWidget {
         children: [
           Column(
             children: [
-              SetDate(),
-              eachGroupAddGoalsPage_GroupGoals(),
-              eachGroupAddGoalsPage_MyGoals(),
+              SetDate(selectWeek: set_selectedWeek),
+              eachGroupAddGoalsPage_GroupGoals(selectedWeek: selectedWeek),
+              eachGroupAddGoalsPage_MyGoals(selectedWeek: selectedWeek),
             ],
           ),
           Container(height: 30, color: Color(0xFFFD531E),)

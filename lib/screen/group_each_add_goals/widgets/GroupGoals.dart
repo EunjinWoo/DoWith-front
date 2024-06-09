@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class eachGroupAddGoalsPage_GroupGoals extends StatefulWidget {
+  final DateTimeRange? selectedWeek;
 
-  eachGroupAddGoalsPage_GroupGoals({super.key});
+  eachGroupAddGoalsPage_GroupGoals({super.key, required this.selectedWeek});
 
   @override
   State<eachGroupAddGoalsPage_GroupGoals> createState() => eachGroupAddGoalsPage_GroupGoalsState();
@@ -14,6 +15,7 @@ class eachGroupAddGoalsPage_GroupGoalsState extends State<eachGroupAddGoalsPage_
     '38290',
     'Programmers - #27'
   ];
+  final List<String> groupGoals_null = [];
 
   bool addingGoals = false;
   final TextEditingController _newGoalController = TextEditingController();
@@ -38,6 +40,8 @@ class eachGroupAddGoalsPage_GroupGoalsState extends State<eachGroupAddGoalsPage_
 
   @override
   Widget build(BuildContext context) {
+    // print('Group : ${widget.selectedWeek}');
+
     return Column(
       children: [
         Container(
@@ -105,7 +109,7 @@ class eachGroupAddGoalsPage_GroupGoalsState extends State<eachGroupAddGoalsPage_
               ),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: groupGoals.length,
+                itemCount: (widget.selectedWeek != null) ? groupGoals.length : groupGoals_null.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     padding: EdgeInsets.symmetric(vertical: 8),

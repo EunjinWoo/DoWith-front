@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
 class eachGroupAddGoalsPage_MyGoals extends StatefulWidget {
+  final DateTimeRange? selectedWeek;
 
-  eachGroupAddGoalsPage_MyGoals({super.key});
+  eachGroupAddGoalsPage_MyGoals({super.key, required this.selectedWeek});
 
   @override
   State<eachGroupAddGoalsPage_MyGoals> createState() => eachGroupAddGoalsPage_MyGoalsState();
 }
 
 class eachGroupAddGoalsPage_MyGoalsState extends State<eachGroupAddGoalsPage_MyGoals> {
-  final List<String> groupGoals = [
+  final List<String> myGoals = [
     '알고리즘 과제',
   ];
+
+  final List<String> myGoals_null = [];
 
   bool addingGoals = false;
   final TextEditingController _newGoalController = TextEditingController();
@@ -30,12 +33,24 @@ class eachGroupAddGoalsPage_MyGoalsState extends State<eachGroupAddGoalsPage_MyG
 
   void _showORhideAddGoalSpace () {
     setState(() {
+      _newGoalController.text = '';
+      addingGoals = !addingGoals;
+    });
+  }
+
+  void _addGoal () {
+    setState(() {
+      print(_newGoalController.text);
+      myGoals.insert(0, _newGoalController.text);
+      _newGoalController.text = '';
       addingGoals = !addingGoals;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // print('My : ${widget.selectedWeek}');
+
     return Column(
       children: [
         Container(
@@ -91,7 +106,7 @@ class eachGroupAddGoalsPage_MyGoalsState extends State<eachGroupAddGoalsPage_MyG
                     ),
                   ),
                   GestureDetector(
-                    onTap: _showORhideAddGoalSpace,
+                    onTap: _addGoal,
                     child: Image.asset('assets/img/Orange_checkmark_icon.png', height: 25,),
                   ),
                   SizedBox(width: 5,),
@@ -103,7 +118,7 @@ class eachGroupAddGoalsPage_MyGoalsState extends State<eachGroupAddGoalsPage_MyG
               ),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: groupGoals.length,
+                itemCount: (widget.selectedWeek != null) ? myGoals.length : myGoals_null.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     padding: EdgeInsets.symmetric(vertical: 8),
@@ -112,7 +127,7 @@ class eachGroupAddGoalsPage_MyGoalsState extends State<eachGroupAddGoalsPage_MyG
                         Image.asset('assets/img/listDot_icon.png', height: 15,),
                         SizedBox(width: 10,),
                         Text(
-                          groupGoals[index],
+                          myGoals[index],
                           style: TextStyle(
                               fontFamily: 'Pretendard-Light',
                               fontSize: 19.5

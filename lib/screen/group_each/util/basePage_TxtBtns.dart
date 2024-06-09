@@ -66,10 +66,6 @@ class basePage_TxtBtns extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 4),
-              child: Text("members", style: TextStyle(fontSize: 20, color: Colors.white, fontFamily: 'Arimo-Regular')),
-            ),
-            Padding(
               padding: EdgeInsets.only(bottom: 0),
               child: GestureDetector(
                   onTap: (){

@@ -5,6 +5,10 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class SetDate extends StatefulWidget {
+  final void Function(DateTimeRange?) selectWeek;
+
+  SetDate({super.key, required this.selectWeek});
+
   @override
   SetDateState createState() => SetDateState();
 }
@@ -128,6 +132,7 @@ class SetDateState extends State<SetDate> {
                   onTap: () {
                     setState(() {
                       _selectedWeek = _tempSelectedWeek;
+                      widget.selectWeek(_selectedWeek);
                     });
                     Navigator.pop(context);
                     isCalendarOpen = false;
