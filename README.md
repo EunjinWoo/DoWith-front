@@ -15,7 +15,7 @@
 Dart, Flutter
 
 ### 🕹️ Architecture
-<img src="https://github.com/user-attachments/assets/c6c0ddda-4b8f-4475-b668-0dac734fad49"/>
+<img src="https://github.com/user-attachments/assets/c6c0ddda-4b8f-4475-b668-0dac734fad49" align="center" width="60%"/>
 
 ### 💻 Pages
 <p align="center"> 
